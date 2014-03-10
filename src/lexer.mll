@@ -6,6 +6,7 @@ open Parser
 rule lex = parse
   | [' ' '\t'] {lex lexbuf }
   | ['0' - '9']+ as s { INT(int_of_string s) }
+  | ['0' - '9']+'.'['0' - '9']+ as s { FLOAT(float_of_string s) }
   | '+' { PLUS }
   | '-' { MINUS }
   | '/' { DIVIDE }
