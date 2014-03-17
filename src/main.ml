@@ -51,10 +51,13 @@ let rec scan_ast = function
   | Div (a, b) -> divide (scan_ast a) (scan_ast b);;
 
 let _ =
+  try
     let lexbuf = Lexing.from_channel stdin in
     while true do
       let result = Parser.program Lexer.lex lexbuf in
         result_printer (scan_ast result);
         print_newline()
     done
+  with Lexer.Eof ->
+    exit 0
 

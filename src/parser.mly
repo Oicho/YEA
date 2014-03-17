@@ -5,7 +5,9 @@ open Typer
 
 %token <int> INT
 %token <float> FLOAT
-%token PLUS MINUS TIMES DIVIDE OPEN CLOSE EOE
+%token <string> ID
+%token PLUS MINUS TIMES DIVIDE OPEN CLOSE EOE LAST
+%token EOF
 
 %start program
 %type <Typer.expr> program
