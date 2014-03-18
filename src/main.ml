@@ -2,6 +2,9 @@ open Typer;;
 open Parser;;
 open Lexer;;
 
+let var_hash =  Hashtbl.create 127542;;
+
+
 let add a  b=
   match a with
   | Int i->
@@ -45,9 +48,9 @@ let result_printer = function
 
 
 let rec scan_ast = function
-  | Var i -> (Int 0)
+  | Var v -> Hashtbl.find var_hash v
   | Num n -> n
-  | Assign (s, e) -> (Int 0)
+  | Assign (id, n) -> let new_val = (scan_ast n) in Hashtbl.add var_hash id new_val; Int(0)
   | Add (a, b) -> add (scan_ast a) (scan_ast b)
   | Mul (a, b) -> times (scan_ast a) (scan_ast  b)
   | Div (a, b) -> divide (scan_ast a) (scan_ast b);;

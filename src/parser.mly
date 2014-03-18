@@ -11,10 +11,10 @@ open Typer
 
 %start program
 %type <Typer.expr> program
-
+%nonassoc EQ
 %left PLUS MINUS
 %left TIMES DIVIDE
-%nonassoc UMINUS
+%nonassoc UMINUS 
 %%
 
 program:
