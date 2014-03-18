@@ -45,7 +45,9 @@ let result_printer = function
 
 
 let rec scan_ast = function
+  | Var i -> (Int 0)
   | Num n -> n
+  | Assign (s, e) -> (Int 0)
   | Add (a, b) -> add (scan_ast a) (scan_ast b)
   | Mul (a, b) -> times (scan_ast a) (scan_ast  b)
   | Div (a, b) -> divide (scan_ast a) (scan_ast b);;

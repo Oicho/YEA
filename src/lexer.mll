@@ -14,6 +14,7 @@ rule lex = parse
   | '*' { TIMES }
   | '(' { OPEN }
   | ')'{ CLOSE }
+  | '=' { EQ }
   | '\n' { EOE }
   | eof { raise Eof }
   | "last" { LAST }

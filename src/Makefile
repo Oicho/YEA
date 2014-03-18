@@ -70,7 +70,7 @@ SOURCES = typer.ml parser.mly lexer.mll  main.ml
 
 # The executable file to generate
 
-EXEC = a.out
+EXEC = yee
 
 ########################## Advanced user's variables #####################
 #
