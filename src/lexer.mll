@@ -16,6 +16,7 @@ rule lex = parse
   | ')'{ CLOSE }
   | '=' { EQ }
   | '\n' { EOE }
+  | ';' { EOE }
   | eof { raise Eof }
   | "last" { LAST }
   | "quit" { raise Eof }
