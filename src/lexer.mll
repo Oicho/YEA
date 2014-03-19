@@ -20,4 +20,4 @@ rule lex = parse
   | eof { raise Eof }
   | "last" { LAST }
   | "quit" { raise Eof }
- | ['a' - 'z' 'A' - 'Z' '_'] ['a' - 'z' 'A' - 'Z' '0' - '9' '_']* as c { ID(c) }
+  | ['a' - 'z' 'A' - 'Z' '_'] ['a' - 'z' 'A' - 'Z' '0' - '9' '_']* as c { ID(c) }

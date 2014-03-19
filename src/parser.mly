@@ -10,22 +10,25 @@ open Typer
 %token EOF
 
 %start program
-%type <Typer.expr> program
+%type <Typer.program> program
+%type <Typer.dec> dec
+
 %nonassoc EQ
 %left PLUS MINUS
 %left TIMES DIVIDE
 %nonassoc UMINUS 
 %%
 
-program:
-  expr EOE{ $1 };
+program: 
+    expr EOE { Expression($1) }
+  | dec EOE { Declaration($1) };
 
 number:
   | FLOAT { Num (Float $1) }
   | INT { Num (Int $1) };
-
+dec:
+  | ID EQ expr {Assign($1, $3)};
 expr:
-  | ID EQ expr {Assign($1, $3)}
   | number {$1}
   | ID { Var($1) }
   | OPEN expr CLOSE { $2 }
