@@ -19,8 +19,9 @@ open Typer
 %nonassoc UMINUS 
 %%
 
-program: 
-    expr EOE { Expression($1) }
+program:
+    EOE {Nil}
+  | expr EOE { Expression($1) }
   | dec EOE { Declaration($1) };
 
 number:
@@ -29,6 +30,7 @@ number:
 dec:
   | ID EQ expr {Assign($1, $3)};
 expr:
+  | LAST { Last }
   | number {$1}
   | ID { Var($1) }
   | OPEN expr CLOSE { $2 }

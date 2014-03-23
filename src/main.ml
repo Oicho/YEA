@@ -3,7 +3,7 @@ open Parser;;
 open Lexer;;
 
 let var_hash =  Hashtbl.create 127542;;
-
+let last_calc = ref (Int(0));;
 
 let add a  b=
   match a with
@@ -49,6 +49,7 @@ let result_printer = function
 
 let rec scan_expr = function
   | Var v -> Hashtbl.find var_hash v
+  | Last -> !last_calc
   | Num n -> n
   | Add (a, b) -> add (scan_expr a) (scan_expr b)
   | Mul (a, b) -> times (scan_expr a) (scan_expr  b)
@@ -56,8 +57,9 @@ let rec scan_expr = function
 let rec scan_dec =function
   | Assign(st, e) -> Hashtbl.add var_hash st (scan_expr e);;
 let rec scan_ast = function
+  | Nil -> ()
   | Declaration(d) -> scan_dec d
-  | Expression(e) -> result_printer(scan_expr e);;
+  | Expression(e) -> last_calc := scan_expr e; result_printer !last_calc;;
 let _ =
   try
     let lexbuf = Lexing.from_channel stdin in
