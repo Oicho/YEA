@@ -40,10 +40,10 @@ expr:
   | LAST { Last }
   | number {$1}
   | ID { Var($1) }
-  | ID PPLUS { Var($1) }
-  | PPLUS ID { Var($2) }
-  | ID MMINUS { Var($1) }
-  | MMINUS ID { Var($2) }
+  | ID PPLUS { Incr($1, 1, false) }
+  | PPLUS ID { Incr($2, 1, true) }
+  | ID MMINUS { Incr($1, -1, false) }
+  | MMINUS ID { Incr($2, -1, true) }
   | OPEN expr CLOSE { $2 }
   | expr PLUS expr {Add($1, $3) }
   | expr MINUS expr {Add($1, Mul( Num (Int (-1)), $3))}
