@@ -12,6 +12,12 @@ rule lex = parse
   | '-' { MINUS }
   | '/' { DIVIDE }
   | '*' { TIMES }
+  | "+=" {PLUSEQ}
+  | "-=" {MINUSEQ}
+  | "*=" {TIMESEQ}
+  | "/=" {DIVEQ}
+  | "++" { PPLUS }
+  | "--" { MMINUS }
   | '(' { OPEN }
   | ')'{ CLOSE }
   | '=' { EQ }

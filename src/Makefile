@@ -161,29 +161,30 @@ $(EXEC).opt: $(OPTOBJS)
 	$(CAMLOPT) -c $*.ml
 
 .mly.cmo:
-	$(CAMLYACC) $<
+	$(CAMLYACC) -v $<
 	$(CAMLC) -c $*.mli
 	$(CAMLC) -c $*.ml
 
 .mly.cmx:
-	$(CAMLYACC) $<
+	$(CAMLYACC) -v $<
 	$(CAMLOPT) -c $*.mli
 	$(CAMLOPT) -c $*.ml
 
 .mly.cmi:
-	$(CAMLYACC) $<
+	$(CAMLYACC) -v $<
 	$(CAMLC) -c $*.mli
 
 .mll.ml:
 	$(CAMLLEX) $<
 
 .mly.ml:
-	$(CAMLYACC) $<
+	$(CAMLYACC) -v $<
 
 clean:
 	rm -f *.cm[iox] *~ .*~ #*#
 	rm -f $(EXEC)
 	rm -f $(EXEC).opt
+	rm -f *.output
 
 depend: $(SOURCES2)
 	$(CAMLDEP) *.mli *.ml > .depend
