@@ -6,7 +6,8 @@ open Typer
 %token <int> INT
 %token <float> FLOAT
 %token <string> ID
-%token PLUS MINUS TIMES DIVIDE OPEN CLOSE EOE LAST EQ
+%token PLUS MINUS TIMES DIVIDE OPEN CLOSE EOE LAST EQ IF LPAREN RPAREN AND OR
+%token LBRACE RBRACE
 %token PLUSEQ DIVEQ MINUSEQ TIMESEQ PPLUS MMINUS
 %token EOF
 
@@ -16,19 +17,27 @@ open Typer
 
 %nonassoc PLUSEQ DIVEQ MINUSEQ TIMESEQ
 %nonassoc EQ
+%left AND OR
 %left PLUS MINUS
 %left TIMES DIVIDE
 %nonassoc UMINUS 
 %%
 
 program:
-    EOE {Nil}
+    EOE program {$2}
   | expr EOE { Expression($1) }
   | dec EOE { Declaration($1) };
+
+/*instruction_block:
+  EOE instruction_block {$2};*/
 
 number:
   | FLOAT { Num (Float $1) }
   | INT { Num (Int $1) };
+
+/*if_block:
+  | IF LPAREN expr RPAREN program*/
+
 dec:
   | ID EQ expr {Assign($1, $3)}
   | ID PLUSEQ expr {Assign($1, Add(Var($1), $3))}

@@ -11,6 +11,13 @@ rule lex = parse
   | '-' { MINUS }
   | '/' { DIVIDE }
   | '*' { TIMES }
+  | "if" { IF }
+  | '(' { LPAREN }
+  | '{' { LBRACE }
+  | ')' { RPAREN }
+  | '}' { RBRACE }
+  | "&&" { AND }
+  | "||" { OR }
   | "+=" {PLUSEQ}
   | "-=" {MINUSEQ}
   | "*=" {TIMESEQ}

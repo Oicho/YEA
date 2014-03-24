@@ -74,7 +74,6 @@ let rec scan_dec =function
   | Assign(st, e) -> Hashtbl.add var_hash st (scan_expr e);;
 
 let rec scan_ast = function
-  | Nil -> ()
   | Declaration(d) -> scan_dec d
   | Expression(e) -> last_calc := scan_expr e; result_printer !last_calc;;
 let _ =
