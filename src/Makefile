@@ -184,6 +184,7 @@ clean:
 	rm -f *.cm[iox] *~ .*~ #*#
 	rm -f $(EXEC)
 	rm -f $(EXEC).opt
+	rm -f parser.ml parser.mli
 	rm -f *.output
 
 depend: $(SOURCES2)

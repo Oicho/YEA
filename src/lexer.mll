@@ -11,7 +11,10 @@ rule lex = parse
   | '-' { MINUS }
   | '/' { DIVIDE }
   | '*' { TIMES }
+  | "while" { WHILE }
   | "if" { IF }
+  | "fi" { FI }
+  | "else" { ELSE }
   | '(' { LPAREN }
   | '{' { LBRACE }
   | ')' { RPAREN }
@@ -24,8 +27,6 @@ rule lex = parse
   | "/=" {DIVEQ}
   | "++" { PPLUS }
   | "--" { MMINUS }
-  | '(' { OPEN }
-  | ')'{ CLOSE }
   | '=' { EQ }
   | '\n' { EOE }
   | ';' { EOE }
