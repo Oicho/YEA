@@ -35,28 +35,17 @@ instruction_block:
     instruction instruction_block {Instr($1, $2)}
   | /* nothing */ {Nil};
 
-infinite_eoe:
-    EOE infinite_eoe {()}
-  | /* nothing */ {()};
 
 number:
   | FLOAT { Num (Float $1) }
   | INT { Num (Int $1) };
-skip_eoe:
-    skip_eoe EOE {()}
-  | EOE {()};
-just_obrace:
-    EOE just_obrace {()}
-  | LBRACE {()};
-just_else:
-    EOE just_else {()}
-  | ELSE {()};
 
 if_block:
-  | IF LPAREN expr RPAREN  instruction_block FI %prec IFX {
-    If_dec($3, $5, Nil) }
-  | IF LPAREN expr RPAREN instruction_block ELSE instruction_block FI {
-    If_dec($3, $5, $7)};
+  | IF LPAREN expr RPAREN  instruction_block else_block {
+    If_dec($3, $5, $6)};
+else_block:
+    FI {Nil}
+  |  ELSE instruction_block FI {$2};
 
 while_block:
   WHILE LPAREN expr RPAREN  instruction_block DONE {
