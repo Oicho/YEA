@@ -12,6 +12,7 @@ rule lex = parse
   | '/' { DIVIDE }
   | '*' { TIMES }
   | "while" { WHILE }
+  | "done" { DONE }
   | "if" { IF }
   | "fi" { FI }
   | "else" { ELSE }

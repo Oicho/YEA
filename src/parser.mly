@@ -7,7 +7,7 @@ open Typer
 %token <float> FLOAT
 %token <string> ID
 %token PLUS MINUS TIMES DIVIDE EOE LAST EQ IF LPAREN RPAREN AND OR
-%token LBRACE RBRACE ELSE WHILE FI
+%token LBRACE RBRACE ELSE WHILE DONE FI
 %token PLUSEQ DIVEQ MINUSEQ TIMESEQ PPLUS MMINUS
 %token EOF
 
@@ -59,11 +59,12 @@ if_block:
     If_dec($3, $5, $7)};
 
 while_block:
-  WHILE LPAREN expr RPAREN infinite_eoe LBRACE instruction_block RBRACE {};
-
+  WHILE LPAREN expr RPAREN  instruction_block DONE {
+    While_dec($3, $5)};
 
 dec:
   | if_block {$1}
+  | while_block {$1}
   | ID EQ expr {Assign($1, $3)}
   | ID PLUSEQ expr {Assign($1, Add(Var($1), $3))}
   | ID MINUSEQ expr {Assign($1, Add(Var($1), Mul (Num(Int(-1)), $3)))}

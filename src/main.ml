@@ -78,6 +78,7 @@ let rec scan_expr = function
 
 let rec scan_dec =function
   | If_dec (cond, if_body, else_body) -> scan_if cond if_body else_body
+  | While_dec (cond, body) -> scan_while cond body
   | Assign(st, e) -> Hashtbl.add var_hash st (scan_expr e)
 and scan_instruction = function
   | Declaration d -> scan_dec d
@@ -85,6 +86,10 @@ and scan_instruction = function
 and scan_instruction_block = function
   | Nil -> ()
   | Instr (i, block) -> scan_instruction i; scan_instruction_block block
+and scan_while cond body =
+  while bool_of_number (scan_expr cond) do
+    scan_instruction_block body;
+  done
 and scan_if cond if_body else_body= 
   if bool_of_number (scan_expr cond) then
     scan_instruction_block if_body
