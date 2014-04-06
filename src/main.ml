@@ -58,22 +58,21 @@ let rec scan_expr = function
   | Var v -> Hashtbl.find var_hash v
   | Last -> !last_calc
   | Num n -> n
-  | Incr (str, i, is_pre) -> 
+  | Incr (str, i, is_pre) ->
     let prev = Hashtbl.find var_hash str in
+    let new_number = add prev (Int(i)) in
+    Hashtbl.add var_hash str new_number;
     if (is_pre) then
     (
-      let new_number = add prev (Int(i)) in
-      Hashtbl.add var_hash str new_number;
       new_number
     )
     else
     (
-      Hashtbl. add var_hash str (add prev (Int(i)));
       prev
     )
-  | Add (a, b) -> add (scan_expr a) (scan_expr b)
-  | Mul (a, b) -> times (scan_expr a) (scan_expr  b)
-  | Div (a, b) -> divide (scan_expr a) (scan_expr b)
+  | Add (a, b) -> add (scan_expr b) (scan_expr a)
+  | Mul (a, b) -> times (scan_expr b) (scan_expr  a)
+  | Div (a, b) -> let arg1 =scan_expr a in divide (arg1) (scan_expr b)
 ;;
 
 let rec scan_dec =function
@@ -90,10 +89,10 @@ and scan_while cond body =
   while bool_of_number (scan_expr cond) do
     scan_instruction_block body;
   done
-and scan_if cond if_body else_body= 
+and scan_if cond if_body else_body=
   if bool_of_number (scan_expr cond) then
     scan_instruction_block if_body
-  else 
+  else
     scan_instruction_block else_body
 ;;
 

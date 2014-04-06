@@ -18,7 +18,7 @@ open Typer
 %nonassoc PLUSEQ DIVEQ MINUSEQ TIMESEQ
 %nonassoc EQ
 %left AND OR
-%left PLUS MINUS
+%left PLUS MINUS PPLUS MMINUS
 %left TIMES DIVIDE  EOE
 %nonassoc IFX
 %nonassoc UMINUS
@@ -64,15 +64,15 @@ expr:
   | LAST { Last }
   | number {$1}
   | ID { Var($1) }
+  | expr PLUS expr {Add($1, $3) }
+  | expr MINUS expr {Add($1, Mul( Num (Int (-1)), $3))}
+  | expr TIMES expr { Mul($1, $3) }
+  | expr DIVIDE expr { Div($1, $3) }
   | ID PPLUS { Incr($1, 1, false) }
   | PPLUS ID { Incr($2, 1, true) }
   | ID MMINUS { Incr($1, -1, false) }
   | MMINUS ID { Incr($2, -1, true) }
   | LPAREN expr RPAREN { $2 }
-  | expr PLUS expr {Add($1, $3) }
-  | expr MINUS expr {Add($1, Mul( Num (Int (-1)), $3))}
-  | expr TIMES expr { Mul($1, $3) }
-  | expr DIVIDE expr { Div($1, $3) }
   | MINUS expr %prec UMINUS{ Mul ( Num (Int (-1)) , $2) };
 
 %%
