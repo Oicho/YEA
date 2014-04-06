@@ -5,7 +5,11 @@ open Lexer;;
 let var_hash =  Hashtbl.create 127542;;
 let last_calc = ref (Int(0));;
 
-
+let get_var v =
+  try
+    Hashtbl.find var_hash v
+  with
+  | Not_found -> Hashtbl.add var_hash v (Int(0)); Int(0);;
 let bool_of_number = function
   | Int i -> (i != 0)
   | Float f -> (f  != 0.);;
@@ -55,11 +59,11 @@ let result_printer = function
 
 
 let rec scan_expr = function
-  | Var v -> Hashtbl.find var_hash v
+  | Var v -> get_var v
   | Last -> !last_calc
   | Num n -> n
   | Incr (str, i, is_pre) ->
-    let prev = Hashtbl.find var_hash str in
+    let prev = get_var str in
     let new_number = add prev (Int(i)) in
     Hashtbl.add var_hash str new_number;
     if (is_pre) then
@@ -75,7 +79,7 @@ let rec scan_expr = function
   | Div (a, b) -> let arg1 =scan_expr a in divide (arg1) (scan_expr b)
 ;;
 
-let rec scan_dec =function
+let rec scan_dec = function
   | If_dec (cond, if_body, else_body) -> scan_if cond if_body else_body
   | While_dec (cond, body) -> scan_while cond body
   | Assign(st, e) -> Hashtbl.add var_hash st (scan_expr e)
