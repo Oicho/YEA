@@ -67,20 +67,16 @@ let rec scan_expr = function
     let new_number = add prev (Int(i)) in
     Hashtbl.add var_hash str new_number;
     if (is_pre) then
-    (
       new_number
-    )
     else
-    (
       prev
-    )
   | Add (a, b) -> add (scan_expr b) (scan_expr a)
   | Mul (a, b) -> times (scan_expr b) (scan_expr  a)
   | Div (a, b) -> let arg1 =scan_expr a in divide (arg1) (scan_expr b)
 ;;
 
 let rec scan_dec = function
-  | If_dec (cond, if_body, else_body) -> scan_if cond if_body else_body
+  | If_dec (l) -> scan_if l
   | While_dec (cond, body) -> scan_while cond body
   | Assign(st, e) -> Hashtbl.add var_hash st (scan_expr e)
 and scan_instruction = function
@@ -93,12 +89,11 @@ and scan_while cond body =
   while bool_of_number (scan_expr cond) do
     scan_instruction_block body;
   done
-and scan_if cond if_body else_body=
-  if bool_of_number (scan_expr cond) then
-    scan_instruction_block if_body
-  else
-    scan_instruction_block else_body
-;;
+and scan_if = function
+  | (cond ,instr)::[] -> scan_instruction_block instr
+  |  (cond ,instr)::l ->if (bool_of_number (scan_expr cond))  then scan_instruction_block instr else scan_if l
+  | [] -> ();;
+
 
 
 

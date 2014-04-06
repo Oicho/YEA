@@ -14,6 +14,7 @@ rule lex = parse
   | "while" { WHILE }
   | "done" { DONE }
   | "if" { IF }
+  | "elif" { ELIF }
   | "fi" { FI }
   | "else" { ELSE }
   | '(' { LPAREN }

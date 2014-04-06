@@ -7,7 +7,7 @@ open Typer
 %token <float> FLOAT
 %token <string> ID
 %token PLUS MINUS TIMES DIVIDE EOE LAST EQ IF LPAREN RPAREN AND OR
-%token LBRACE RBRACE ELSE WHILE DONE FI
+%token LBRACE RBRACE ELSE WHILE DONE FI ELIF
 %token PLUSEQ DIVEQ MINUSEQ TIMESEQ PPLUS MMINUS
 %token EOF
 
@@ -42,10 +42,12 @@ number:
 
 if_block:
   | IF LPAREN expr RPAREN  instruction_block else_block {
-    If_dec($3, $5, $6)};
+    If_dec(($3, $5)::($6))};
 else_block:
-    FI {Nil}
-  |  ELSE instruction_block FI {$2};
+    FI {[]}
+  | ELIF LPAREN expr RPAREN instruction_block else_block {
+    ($3, $5)::($6) }
+  |  ELSE instruction_block FI {[(Num(Int(0)), $2)]};
 
 while_block:
   WHILE LPAREN expr RPAREN  instruction_block DONE {

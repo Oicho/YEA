@@ -1,6 +1,6 @@
 type number = Int of int | Float of float;;
 
-type expr = 
+type expr =
     Var of string
   | Last
   | Incr of string * int *bool
@@ -8,9 +8,9 @@ type expr =
   | Add of expr * expr
   | Mul of expr * expr
   | Div of expr * expr
-and dec = 
-    Assign of string * expr 
-  | If_dec of expr * instruction_block * instruction_block
+and dec =
+    Assign of string * expr
+  | If_dec of (expr * instruction_block) list
   | While_dec of expr * instruction_block
 and instruction =  Declaration of dec| Expression of expr
 and instruction_block = Nil| Instr of instruction * instruction_block;;
