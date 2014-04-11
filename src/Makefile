@@ -66,7 +66,7 @@
 #
 # The Caml sources (including camlyacc and camllex source files)
 
-SOURCES = typer.ml parser.mly lexer.mll  main.ml
+SOURCES = typer.ml scoped_map.ml parser.mly lexer.mll  main.ml
 
 # The executable file to generate
 

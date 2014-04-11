@@ -5,5 +5,7 @@ main.cmo : typer.cmo parser.cmi lexer.cmo
 main.cmx : typer.cmx parser.cmx lexer.cmx
 parser.cmo : typer.cmo parser.cmi
 parser.cmx : typer.cmx parser.cmi
+scoped_map.cmo : typer.cmo
+scoped_map.cmx : typer.cmx
 typer.cmo :
 typer.cmx :
