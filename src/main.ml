@@ -1,15 +1,16 @@
 open Typer;;
 open Parser;;
 open Lexer;;
-
+open Scoped_map;;
 let var_hash =  Hashtbl.create 127542;;
+let var_map = new Scoped_map.scoped_map;;
 let last_calc = ref (Int(0));;
 
 let get_var v =
   try
-    Hashtbl.find var_hash v
+    var_map#get_var v
   with
-  | Not_found -> Hashtbl.add var_hash v (Int(0)); Int(0);;
+  | Not_found -> var_map#set_var v (Int(0)); Int(0)
 let bool_of_number = function
   | Int i -> (i != 0)
   | Float f -> (f  != 0.);;
@@ -76,9 +77,9 @@ let rec scan_expr = function
 ;;
 
 let rec scan_dec = function
-  | If_dec (l) -> scan_if l
-  | While_dec (cond, body) -> scan_while cond body
-  | Assign(st, e) -> Hashtbl.add var_hash st (scan_expr e)
+  | If_dec (l) -> var_map#scope_begin; scan_if l; var_map#scope_end
+  | While_dec (cond, body) -> var_map#scope_begin; scan_while cond body; var_map#scope_end
+  | Assign(st, e) -> var_map#set_var st (scan_expr e)
 and scan_instruction = function
   | Declaration d -> scan_dec d
   | Expression e -> result_printer (scan_expr e)
@@ -101,10 +102,12 @@ let rec scan_ast = function
 let _ =
   try
     let lexbuf = Lexing.from_channel stdin in
+    var_map#scope_begin;
     while true do
       let result = Parser.instruction Lexer.lex lexbuf in
         scan_ast result;
     done
+
   with Lexer.Eof ->
     exit 0
 

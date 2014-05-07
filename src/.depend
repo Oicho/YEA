@@ -1,8 +1,8 @@
 parser.cmi : typer.cmo
 lexer.cmo : parser.cmi
 lexer.cmx : parser.cmx
-main.cmo : typer.cmo parser.cmi lexer.cmo
-main.cmx : typer.cmx parser.cmx lexer.cmx
+main.cmo : typer.cmo scoped_map.cmo parser.cmi lexer.cmo
+main.cmx : typer.cmx scoped_map.cmx parser.cmx lexer.cmx
 parser.cmo : typer.cmo parser.cmi
 parser.cmx : typer.cmx parser.cmi
 scoped_map.cmo : typer.cmo
