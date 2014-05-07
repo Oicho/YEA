@@ -2,7 +2,6 @@ open Typer;;
 open Parser;;
 open Lexer;;
 open Scoped_map;;
-let var_hash =  Hashtbl.create 127542;;
 let var_map = new Scoped_map.scoped_map;;
 let last_calc = ref (Int(0));;
 
@@ -66,7 +65,7 @@ let rec scan_expr = function
   | Incr (str, i, is_pre) ->
     let prev = get_var str in
     let new_number = add prev (Int(i)) in
-    Hashtbl.add var_hash str new_number;
+    var_map#set_var str new_number;
     if (is_pre) then
       new_number
     else
