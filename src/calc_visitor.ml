@@ -95,6 +95,6 @@ and scan_if = function
   | [] -> ();;
 
 
-let rec scan_ast = function
+let scan_ast = function
   | Declaration(d) -> scan_dec d
   | Expression(e) -> last_calc := scan_expr e; result_printer !last_calc;;

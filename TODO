@@ -1,8 +1,8 @@
 Improve TODO hum......
 
-setting up a test suite
-for  blocks
-Function declaration
-Better error handling
-pretty printing
-
+I   pretty printing
+    command line interface
+    for  blocks
+II  Setting up a test suite
+    Function declaration
+III Better error handling
