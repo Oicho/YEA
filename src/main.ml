@@ -8,9 +8,6 @@ open Print_visitor;;
 let main_loop lexbuf =
    while true do
       let result = Parser.instruction Lexer.lex lexbuf in
-        (*
-        Print_visitor.scan_ast result;
-      *)
         Calc_visitor.scan_ast result;
     done
 
@@ -22,4 +19,3 @@ let _ =
    
     
   with Lexer.Eof -> exit 0
-  (*if pretty print*)
