@@ -7,9 +7,9 @@ open Typer
 %token <float> FLOAT
 %token <string> ID
 %token PLUS MINUS TIMES DIVIDE EOE LAST EQ IF LPAREN RPAREN AND OR
-%token LBRACE RBRACE ELSE WHILE DONE FI ELIF
+%token LBRACE RBRACE ELSE WHILE DONE FI ELIF QUIT
 %token PLUSEQ DIVEQ MINUSEQ TIMESEQ PPLUS MMINUS
-%token EOF
+%token EOF 
 
 %start instruction
 %type <Typer.instruction> instruction
@@ -64,6 +64,7 @@ dec:
 
 expr:
   | LAST { Last }
+  | QUIT { Quit }
   | number {$1}
   | ID { Var($1) }
   | expr PLUS expr {Add($1, $3) }

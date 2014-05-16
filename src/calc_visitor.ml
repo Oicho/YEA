@@ -61,6 +61,7 @@ let result_printer = function
 let rec scan_expr = function
   | Var v -> get_var v
   | Last -> !last_calc
+  | Quit -> exit 0
   | Num n -> n
   | Incr (str, i, is_pre) ->
     let prev = get_var str in

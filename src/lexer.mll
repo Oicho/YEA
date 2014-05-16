@@ -34,7 +34,7 @@ rule lex = parse
   | ';' { EOE }
   | eof { raise Eof }
   | "last" { LAST }
-  | "quit" { raise Eof }
+  | "quit" { QUIT }
   | ['a' - 'z' 'A' - 'Z' '_'] ['a' - 'z' 'A' - 'Z' '0' - '9' '_']* as c { ID(c) }
   | "//" { one_line_comment lexbuf }
   | "/*" { comment 0 lexbuf }

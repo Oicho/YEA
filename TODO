@@ -1,7 +1,7 @@
 Improve TODO hum......
 
 I   pretty printing
-    command line interface
+    command line interface (read from file)
     for  blocks
 II  Setting up a test suite
     Function declaration
